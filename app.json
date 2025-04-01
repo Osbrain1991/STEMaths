@@ -3,9 +3,11 @@
     "name": "STEMaths",
     "slug": "STEMaths",
     "version": "1.0.0",
+    "scheme": "stemaths",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "owner": "osbrain",
     "newArchEnabled": true,
     "splash": {
       "image": "./assets/splash-icon.png",
@@ -19,10 +21,17 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.gatugbeosborn.stemaths",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "070c34f8-d937-4d8b-8544-0e6ac7871d1f"
+      }
     }
   }
 }

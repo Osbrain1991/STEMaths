@@ -1,55 +1,99 @@
-import { View, Text, Image} from 'react-native'
-import React from 'react'
+import { View, Text, Image, TouchableOpacity } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import Colors from '../Shared/Colors';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import * as WebBrowser from 'expo-web-browser';
+import * as Google from 'expo-auth-session/providers/google';
+
+// Uncomment if using AuthContext for state management
+// import { AuthContext } from '../context/AuthContext'; 
+
 export default function Login() {
+  WebBrowser.maybeCompleteAuthSession();
+
+  // State for access token and user data
+  const [accessToken, setAccessToken] = useState(null);
+  const [userInfo, setUserInfo] = useState(null);
+
+  // Uncomment if using AuthContext
+  // const { userData, setUserData } = useContext(AuthContext);
+
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    androidClientId: '679173789326-5i9udl6j644og2j6623u8vcgju08tfjt.apps.googleusercontent.com',
+    expoClientId: '679173789326-fdunsigub578vis6p6phjbpg9qmpcglk.apps.googleusercontent.com',
+   redirectUri: 'https://auth.expo.io/@osbrain/STEMaths', // Ensure it's correct
+  });
+/*
+  useEffect(() => {
+    if (response?.type === 'success') {
+      setAccessToken(response.authentication.accessToken);
+      getUserData(response.authentication.accessToken);
+    }
+  }, [response]);
+
+  const getUserData = async (token) => {
+    try {
+      const resp = await fetch('https://www.googleapis.com/userinfo/v2/me', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      const user = await resp.json();
+      console.log('User Details:', user);
+      setUserInfo(user);
+
+      // Ensure setUserData exists before calling it
+      // if (setUserData) setUserData(user);
+
+      // Ensure Services.setUserAuth exists before calling it
+      // if (Services && Services.setUserAuth) await Services.setUserAuth(user);
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  };
+*/
   return (
     <View>
-      <Image source={require('./../Assets/Image/stu_dent.png')} //
-      style={{width: '100%', height: '40%',// 40% of screen height
-        resizeMode: 'cover'}} />
-        <View style={styles.container}>
-            <Text style={styles.welcomeText}>Welcome to STEMaths</Text>
+      <Image source={require('./../Assets/Image/login.png')} />
+      <View style={styles.container}>
+        <Text style={styles.welcomeText}>Welcome to STEMaths</Text>
         <Text style={styles.loginText}>Login/Signup</Text>
-        
-        <View style={styles.button}>
-        <Ionicons name="logo-google" size={24} color="white" 
-        style={{marginRight: 10}}/>
-         <Text style={{color:Colors.white}}>Sign In with Google</Text>
-        </View>
-        </View>
+
+        <TouchableOpacity style={styles.button} onPress={() => promptAsync()}>
+          <Ionicons name="logo-google" size={24} color="white" style={{ marginRight: 10 }} />
+          <Text style={{ color: Colors.white }}>Sign In with Google</Text>
+        </TouchableOpacity>
+      </View>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
-    loginText:{
-        textAlign: 'center',
-        marginTop: 80,
-        fontSize: 20,
-    }, 
-
-    container:{
-        paddingTop:40,
-        marginTop:-25 ,
-        backgroundColor: '#fff',
-        borderTopRightRadius: 30,
-        borderTopLeftRadius: 30,
-    },
-    welcomeText:{
-    fontSize:35, textAlign: 'center',
-        fontWeight: 'bold',
-        paddingTop: 20,
-    },
-    button: {
-        backgroundColor:Colors.primary,
-        padding: 10,
-        margin: 30,
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 10,
-    },
-    })
+  loginText: {
+    textAlign: 'center',
+    marginTop: 80,
+    fontSize: 20,
+  },
+  container: {
+    paddingTop: 40,
+    marginTop: -25,
+    backgroundColor: '#fff',
+    borderTopRightRadius: 30,
+    borderTopLeftRadius: 30,
+  },
+  welcomeText: {
+    fontSize: 35,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    paddingTop: 20,
+  },
+  button: {
+    backgroundColor: Colors.primary,
+    padding: 10,
+    margin: 30,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+  },
+});
