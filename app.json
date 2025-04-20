@@ -22,7 +22,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.gatugbeosborn.stemaths",
+      "package": "com.gatugbeosborn20.stemaths",
       "versionCode": 1
     },
     "web": {
@@ -32,6 +32,12 @@
       "eas": {
         "projectId": "070c34f8-d937-4d8b-8544-0e6ac7871d1f"
       }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/070c34f8-d937-4d8b-8544-0e6ac7871d1f"
     }
   }
 }
